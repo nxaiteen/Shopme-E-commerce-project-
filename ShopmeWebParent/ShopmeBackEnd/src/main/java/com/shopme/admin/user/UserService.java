@@ -1,0 +1,87 @@
+package com.shopme.admin.user;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.shopme.common.entity.Role;
+import com.shopme.common.entity.User;
+
+@Service
+public class UserService {
+	
+	@Autowired //Для реализации UserRepository в режиме runtime (позволить Spring внедрить экземпляр класса во время выполнения)
+	private UserRepository userRepo;
+	
+	@Autowired
+	private RoleRepository roleRepo;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	//Функция, возвращающая список всех пользователей 
+	public List<User> listAll() {
+		return (List<User>) userRepo.findAll();
+	}
+	
+	//Функция, возвращающая список ролей пользователей 
+	public List<Role> listRoles(){
+		return (List<Role>) roleRepo.findAll();
+	}
+	
+	//Функция для сохранения пользователя 
+	public void save(User user) {
+		//Проверка на то, обновляется ли информация об уже существующем пользователе
+		boolean isUpdatingUser = (user.getId() != null);
+		
+		if (isUpdatingUser) {
+			User existingUser = userRepo.findById(user.getId()).get();
+			
+			//Если в поле для пароля ничего не написано, значит поользователь не хочет менять пароль и он остаётся без изменений
+			if (user.getPassword().isEmpty()) {
+				user.setPassword(existingUser.getPassword());
+			} else {
+				encodePassword(user);
+			}
+		} else {
+			encodePassword(user);
+		}
+		
+		userRepo.save(user);
+	}
+	
+	//Функция для кодирования пароля пользователя
+	private void encodePassword(User user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
+	}
+	
+	//Функция, которая возвращает true, если адрес уникальный
+	public boolean isEmailUnique(Integer id, String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+		
+		if (userByEmail == null) return true;
+		
+		boolean isCreatingNew = (id == null);
+		
+		if (isCreatingNew) {
+			if (userByEmail != null) return false;
+		} else if (userByEmail.getId() != id) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	public User get(Integer id) throws UserNotFoundException {
+		try {
+			return userRepo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new UserNotFoundException("Could not find any user with ID " + id);
+		}
+		
+	}
+}
