@@ -5,7 +5,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController //@RestController возвращает не html страницу, как Controller, а JSON сраницу
 public class UserRestController {
 	
 	@Autowired

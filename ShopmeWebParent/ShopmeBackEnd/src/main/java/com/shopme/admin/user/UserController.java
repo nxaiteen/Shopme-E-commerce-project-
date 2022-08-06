@@ -31,11 +31,11 @@ public class UserController {
 	public String newUser(Model model) {
 		List<Role> listRoles = service.listRoles();
 		User user = new User();
-		user.setEnabled(true);
+		user.setEnabled(true); //По умолчанию будет стоять галочка напротив Enabled
 		
 		model.addAttribute("user", user); //Помещаем пользователя в модель, что Thymeleaf  и Spring MVC связали его с формой регистрации
-		model.addAttribute("listRoles",listRoles);
-		model.addAttribute("pageTitle", "Create New User");
+		model.addAttribute("listRoles",listRoles); // Помещаем в модель список возможных ролей
+		model.addAttribute("pageTitle", "Create New User"); //Помещаем в модель название страницы (отобразится после нажатия на Create New User)
 		
 		return "user_form";
 	}
@@ -51,8 +51,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/edit/{id}")
-	public String editUser(@PathVariable(name = "id") Integer id,
-			Model model,
+	public String editUser(@PathVariable(name = "id") Integer id, Model model,
 			RedirectAttributes redirectAttributes) {
 		try {
 			User user = service.get(id);
@@ -67,5 +66,20 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/users";
 		}
+	}
+	
+	@GetMapping("/users/delete/{id}")
+	public String deleteUser(@PathVariable(name = "id") Integer id, Model model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			service.delete(id);
+			List<Role> listRoles = service.listRoles();
+			redirectAttributes.addFlashAttribute("message",
+					"The user ID " + id + " has been deleted successfully");
+		} catch (UserNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+		
+		return "redirect:/users";
 	}
 }
