@@ -1,5 +1,6 @@
 package com.shopme.common.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -132,11 +133,18 @@ public class User {
 		this.roles.add(role);
 	}
 
-	//То, как будут отображаться данные
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstname=" + firstname
 				+ ", lastname=" + lastname + ", roles=" + roles + "]";
 	}
 	
+	//Означает, что геттер не является каким-либо полем в базе данных
+	@Transient
+	public String getPhotosImagePath( ) {
+		if(id == null || photos == null)
+			return "/images/default-user.png";
+		
+		return "/user-photos/" + this.id + "/" + this.photos;
+	}
 }

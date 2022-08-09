@@ -36,7 +36,7 @@ public class UserService {
 	}
 	
 	//Функция для сохранения пользователя 
-	public void save(User user) {
+	public User save(User user) {
 		//Проверка на то, обновляется ли информация об уже существующем пользователе
 		boolean isUpdatingUser = (user.getId() != null);
 		
@@ -53,7 +53,7 @@ public class UserService {
 			encodePassword(user);
 		}
 		
-		userRepo.save(user);
+		return userRepo.save(user);
 	}
 	
 	//Функция для кодирования пароля пользователя
