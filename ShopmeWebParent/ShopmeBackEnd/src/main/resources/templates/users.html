@@ -99,7 +99,7 @@
                             <td>
                             	<span th:if="${user.photos == null}" class="fa-solid fa-image-portrait fa-3x icon-silver"></span>
                             	<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" />
-                            	<style="width: 100px"></style>
+                            	
                             </td>
                             <td>[[${user.email}]]</td>
                             <td>[[${user.firstname}]]</td>
