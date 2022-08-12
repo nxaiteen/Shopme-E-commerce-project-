@@ -3,9 +3,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-        <title>Home - Shopme Admin</title>
+        <title>Users - Shopme Admin</title>
 
-        
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/> <!-- подключаем html-фрейворк Bootstrap для более быстрой и простой вёрстки сайта -->
         <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
@@ -76,78 +75,34 @@
             <div th:if="${message != null}" class="alert alert-success text-center">
                 [[${message}]]
             </div>
+            
+            <div>
+            	<form th:action="@{/users/page/1}" class="form-inline m-3">
+            		<!--sortField и sortDir будут отпрвляться вместе с формой  -->
+            		<input type="hidden" name="sortField" th:value="${sortField}"/>
+   					<input type="hidden" name="sortDir" th:value="${sortDir}"/>        	
+            	
+            		Filter:&nbsp;
+            		<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+            		&nbsp;&nbsp;
+            		<input type="submit" value="Search" class="btn btn-primary"/>
+            		&nbsp;&nbsp;
+            		<input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+            	</form>
+            </div>
 
             <div>
                 <!--table-responsive - по ширине контента; xL - по ширине страницы  -->
                 <table class="table table-responsive-xL table-bordered table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th>
-                            	<a th:if="${sortField != 'id'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}">
-                            		User ID
-                            	</a>
-                            	<a th:if="${sortField == 'id'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
-                            		User ID
-                            	</a>
-                            	<span th:if="${sortField == 'id'}"
-                            		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                            </th>
-                            
+                            <th th:replace="fragments :: column_link('id', 'User ID')"></th>                        
                             <th>Photos</th>
-                            
-                            <th>
-                            	<a th:if="${sortField != 'email'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">
-                            		E-mail
-                            	</a>
-                            	<a th:if="${sortField == 'email'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
-                            		E-mail
-                            	</a>
-                            	<span th:if="${sortField == 'email'}"
-                            		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                            </th>
-                            <th>
-                            	<a th:if="${sortField != 'firstname'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstname&sortDir=' + ${sortDir}}">
-                            		First Name
-                            	</a>
-                            	<a th:if="${sortField == 'firstname'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstname&sortDir=' + ${reverseSortDir}}">
-                            		First Name
-                            	</a>
-                            	<span th:if="${sortField == 'firstname'}"
-                            		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                            </th>
-                            <th>
-                            	<a th:if="${sortField != 'lastname'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastname&sortDir=' + ${sortDir}}">
-                            		Last Name
-                            	</a>
-                            	<a th:if="${sortField == 'lastname'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastname&sortDir=' + ${reverseSortDir}}">
-                            		Last Name
-                            	</a>
-                            	<span th:if="${sortField == 'lastname'}"
-                            		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                            </th>
-                            
-                            <th>Roles</th>
-                            
-                            <th>
-                            	<a th:if="${sortField != 'enabled'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir}}">
-                            		Enabled
-                            	</a>
-                            	<a th:if="${sortField == 'enabled'}" class="text-white"
-                            		th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${reverseSortDir}}">
-                            		Enabled
-                            	</a>
-                            	<span th:if="${sortField == 'enabled'}"
-                            		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                            </th>
+                            <th th:replace="fragments :: column_link('email', 'E-Mail')"></th>
+                            <th th:replace="fragments :: column_link('firstname', 'First Name')"></th>
+                            <th th:replace="fragments :: column_link('lastname', 'Last Name')"></th>                           
+                            <th>Roles</th>                           
+   							<th th:replace="fragments :: column_link('enabled', 'Enabled')"></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -156,8 +111,8 @@
                         <tr th:each="user : ${listUsers}">
                             <td>[[${user.id}]]</td>
                             <td>
-                            	<span th:if="${user.photos == null}" class="fa-solid fa-image-portrait fa-3x icon-silver"></span>
-                            	<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" />
+                            	<span th:if="${user.photos == null}" class="fa-solid fa-image-portrait fa-7x icon-silver"></span>
+                            	<img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" width="100px"/>
                             	
                             </td>
                             <td>[[${user.email}]]</td>
@@ -198,24 +153,20 @@
             
             
             <!--Пагинация  -->
-            <div>
+            <div th:if="${totalPages > 1}">
 	            <nav>
 			  		<ul class="pagination justify-content-center">
-					    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					    	<a class="page-link" th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+					    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}" th:include="fragments :: pagination_link('First', '1')" />
+					    
+					    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}" th:include="fragments :: pagination_link('Previous', ${currentPage - 1})"/>
+					    
+					    <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item active'}" >
+					    	<a th:include="fragments :: pagination_link(${i}, ${i})">
 					    </li>
-					    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					    	<a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
-					    </li>
-					    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
-					    	<a class="page-link" th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-					    </li>
-					    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					    	<a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-					    </li>
-					    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					    	<a class="page-link" th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-					    </li>
+					    	
+					    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}" th:include="fragments :: pagination_link('Next', ${currentPage + 1})"/>
+					    	
+					    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}" th:include="fragments :: pagination_link('Last', ${totalPages})"/>
 			  		</ul>
 				</nav>
             </div>
@@ -262,6 +213,10 @@
                    $("#confirmModal").modal();
                }); 
             });
+            
+            function clearFilter() {
+				window.location = "[[@{/users}]]";
+			}
         </script>
 
 	</body>

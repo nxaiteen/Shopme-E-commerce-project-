@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+</head>
+<body>
+	<!--Фрагмент для отображения названия стобцов таблицы с сортировкой -->
+    <th th:fragment="column_link(fieldname, columnLabel)">
+        <a class="text-white"
+            th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldname} + '&sortDir=' + ${sortField != fieldname ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
+            [[${columnLabel}]]
+        </a>
+        <span th:if="${sortField == fieldname}"
+            th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+    </th>
+    
+    <!--Фрагмент пагинации -->
+    <li th:fragment="pagination_link(pageName, pagePath)">	
+		<a class="page-link" 
+			th:href="@{'/users/page/' + ${pagePath} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
+			[[${pageName}]]
+		</a>
+    </li>
+    
+    
+</body>
+</html>
