@@ -32,7 +32,7 @@ public class UserService {
 	
 	//Функция, возвращающая список всех пользователей 
 	public List<User> listAll() {
-		return (List<User>) userRepo.findAll();
+		return (List<User>) userRepo.findAll(Sort.by("lastname").ascending());
 	}
 	
 	//Функция для обеспечения пагинации страниц и сортировки пользователей

@@ -70,6 +70,8 @@
             <div>
                 <h2>Manage Users</h2>
                 <a th:href="@{/users/new}">Create New User</a>
+                &nbsp;|&nbsp;
+                <a th:href="@{/users/export/csv}">Export to CSV</a>
             </div>
             
             <div th:if="${message != null}" class="alert alert-success text-center">
@@ -77,7 +79,7 @@
             </div>
             
             <div>
-            	<form th:action="@{/users/page/filter/1}" class="form-inline m-3">
+            	<form th:action="@{/users/page/1}" class="form-inline m-3">
             		<!--sortField и sortDir будут отпрвляться вместе с формой  -->
             		<input type="hidden" name="sortField" th:value="${sortField}"/>
    					<input type="hidden" name="sortDir" th:value="${sortDir}"/>        	
@@ -121,12 +123,12 @@
                             <td>[[${user.roles}]]</td>
                             <td>
                                 <a th:if="${user.enabled == true}" class="fa-solid fa-circle-check fa-2x icon-green" 
-                                	th:href="@{'/users/page/filter/' + ${currentPage} + '/' + ${user.id} + '/enabled/false?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}" 
+                                	th:href="@{'/users/page/' + ${currentPage} + '/' + ${user.id} + '/enabled/false?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}" 
                                 	title="Disable this user"
                                 	></a>
                                                         	
                                 <a th:if="${user.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark" 
-                                	th:href="@{'/users/page/filter/' + ${currentPage} + '/' + ${user.id} + '/enabled/true?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}"
+                                	th:href="@{'/users/page/' + ${currentPage} + '/' + ${user.id} + '/enabled/true?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}"
                                 	title="Enable this user"
                                 	></a>
                             </td>

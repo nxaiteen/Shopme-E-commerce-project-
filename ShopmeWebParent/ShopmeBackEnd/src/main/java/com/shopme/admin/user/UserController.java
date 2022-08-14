@@ -3,6 +3,8 @@ package com.shopme.admin.user;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -135,7 +137,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	@GetMapping("/users/page/filter/{pageNum}/{id}/enabled/{status}")
+	@GetMapping("/users/page/{pageNum}/{id}/enabled/{status}")
 	public String updateUserEnabledStatus( Model model,
 			@PathVariable("status") boolean enabled, @PathVariable("id") Integer id,
 			@PathVariable("pageNum") Integer pageNum,
@@ -154,28 +156,17 @@ public class UserController {
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("keyword", keyword);
 		
-		System.out.println("KEY: " + keyword);
-		
 		if(!keyword.equals("null"))
-			return "redirect:/users/page/filter/" + pageNum + "?sortField=" + sortField + "&sortDir=" + sortDir + "&keyword=" + keyword;
+			return "redirect:/users/page/" + pageNum + "?sortField=" + sortField + "&sortDir=" + sortDir + "&keyword=" + keyword;
 		else
 			return "redirect:/users/page/" + pageNum + "?sortField=" + sortField + "&sortDir=" + sortDir;
 	}
 	
-	@GetMapping("/users/page/filter/{pageNum}")
-	public String filterUser(Model model,
-			@PathVariable("pageNum") Integer pageNum,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir, @Param("keyword") String keyword) {
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
 		
-		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
-		List<User> listUsers = page.getContent();
-		
-		model.addAttribute("currentPage", pageNum);
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("listUsers", listUsers);
-		
-		return "/users";
+		List<User> listUsers = service.listAll();
+		UserCsvExporter exporter = new UserCsvExporter();
+		exporter.export(listUsers, response);
 	}
 }
