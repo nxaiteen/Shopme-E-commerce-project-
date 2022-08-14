@@ -28,7 +28,7 @@ public class UserController {
 	
 	@GetMapping("/users") 
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "id", "asc", null); //firstname (имя поля в классе-сущности User) для сортировки по именам пользователей
+		return listByPage(1, model, "id", "asc", null); //id (имя поля в классе-сущности User) для сортировки по именам пользователей
 	}
 	
 	@GetMapping("/users/page/{pageNum}")
@@ -36,9 +36,6 @@ public class UserController {
 			@PathVariable(name = "pageNum") int pageNum, Model model,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
 			@Param("keyword") String keyword) {
-		
-		System.out.println("Sort field: " + sortField);
-		System.out.println("Sort order: " + sortDir);
 		
 		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<User> listUsers = page.getContent();
@@ -138,15 +135,47 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	@GetMapping("/users/{id}/enabled/{status}")
-	public String updateUserEnabledStatus(@PathVariable("id") Integer id,
-			@PathVariable("status") boolean enabled, 
+	@GetMapping("/users/page/filter/{pageNum}/{id}/enabled/{status}")
+	public String updateUserEnabledStatus( Model model,
+			@PathVariable("status") boolean enabled, @PathVariable("id") Integer id,
+			@PathVariable("pageNum") Integer pageNum,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir, @Param("keyword") String keyword,
 			RedirectAttributes redirectAttributes) {
+		
 		service.updateUserEnabledStatus(id, enabled);
 		String status = enabled ? "enabled" : "disabled";
 		String message = "The user ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 		
-		return "redirect:/users";
+		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
+		
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("keyword", keyword);
+		
+		System.out.println("KEY: " + keyword);
+		
+		if(!keyword.equals("null"))
+			return "redirect:/users/page/filter/" + pageNum + "?sortField=" + sortField + "&sortDir=" + sortDir + "&keyword=" + keyword;
+		else
+			return "redirect:/users/page/" + pageNum + "?sortField=" + sortField + "&sortDir=" + sortDir;
+	}
+	
+	@GetMapping("/users/page/filter/{pageNum}")
+	public String filterUser(Model model,
+			@PathVariable("pageNum") Integer pageNum,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir, @Param("keyword") String keyword) {
+		
+		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
+		List<User> listUsers = page.getContent();
+		
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("listUsers", listUsers);
+		
+		return "/users";
 	}
 }
