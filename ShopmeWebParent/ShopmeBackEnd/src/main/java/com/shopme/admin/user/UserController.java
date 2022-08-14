@@ -3,6 +3,7 @@ package com.shopme.admin.user;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,6 @@ public class UserController {
 		return "user_form";
 	}
 	
-	//После сохранения нового пользователя происходит переадресация на главную страницу
 	@PostMapping("/users/save")
 	public String saveUser(User user, RedirectAttributes redirectAttributes,
 			@RequestParam("image") MultipartFile multipartFile) throws IOException { //Используем RedirectAttributes, потому что на странице адресации будут изменения
@@ -112,7 +112,7 @@ public class UserController {
 			List<Role> listRoles = service.listRoles();
 			
 			model.addAttribute("user", user);
-			model.addAttribute("pageTitle", "Edit Use (ID: " + id + ")");
+			model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
 			model.addAttribute("listRoles",listRoles);
 			
 			return "user_form";

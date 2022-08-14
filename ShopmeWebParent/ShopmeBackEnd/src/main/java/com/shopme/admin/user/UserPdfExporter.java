@@ -75,7 +75,6 @@ public class UserPdfExporter extends AbstractExporter {
 			table.addCell(cell);
 		}
 		
-		
 	}
 
 }
