@@ -26,23 +26,23 @@
 	    
 	    <!--Фрагмент Enable/Disable -->
 	    <td th:fragment="enableButton_link">
-	    	<a th:if="${user.enabled == true}" class="fa-solid fa-circle-check fa-2x icon-green" 
+	    	<a th:if="${user.enabled == true}" class="fa-solid fa-circle-check fa-2x icon-green hover-link-darkgreen" 
 		    	th:href="@{'/users/page/' + ${currentPage} + '/' + ${user.id} + '/enabled/false?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}" 
 		    	title="Disable this user"
 		    	></a>
 	                                                        	
-	        <a th:if="${user.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark" 
+	        <a th:if="${user.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark hover-link-darkgray" 
 	        	th:href="@{'/users/page/' + ${currentPage} + '/' + ${user.id} + '/enabled/true?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}"
 	        	title="Enable this user"
 	        	></a>
 	    </td>
 	    
 	    <!--Фрагмент Update -->  
-    	<a th:fragment="updateUser_link" class="fa-solid fa-user-pen fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"
+    	<a th:fragment="updateUser_link" class="fa-solid fa-user-pen fa-2x icon-green hover-link-darkgreen" th:href="@{'/users/edit/' + ${user.id}}"
         	title="Edit this user"></a> 
         	
         <!--Фрагмент Delete --> 
-        <a th:fragment="deleteUser_link" class="fa-solid fa-user-slash fa-2x icon-dark link-delete" 
+        <a th:fragment="deleteUser_link" class="fa-solid fa-user-slash fa-2x icon-dark link-delete hover-link-darkgray" 
            th:href="@{'/users/delete/' + ${user.id}}"
            th:userId="${user.id}"
            title="Delete this user"></a>

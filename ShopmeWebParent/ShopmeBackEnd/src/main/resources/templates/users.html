@@ -71,43 +71,46 @@
 
             <div>
                 <h2>Manage Users</h2>
-                <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
-                
-                <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
-                
-                <a th:href="@{/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark mr-2"></a>
-                
-                <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark mr-2"></a>
             </div>
             
             <div th:if="${message != null}" class="alert alert-success text-center">
                 [[${message}]]
             </div>
-            
-            <div>
-            	<form th:action="@{/users/page/1}" class="form-inline m-3">
-            		<!--sortField и sortDir будут отпрвляться вместе с формой  -->
-            		<input type="hidden" name="sortField" th:value="${sortField}"/>
-   					<input type="hidden" name="sortDir" th:value="${sortDir}"/>        	
-            	
-            		Filter:&nbsp;&nbsp;
-            		<!-- Строка поиска -->
-            		<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
-            		&nbsp;&nbsp;
-            		<!-- Кнопка поиска -->
-            		<button type="submit" class="btn btn-primary">
-            			<i class="fas fa-search"></i>
-            		</button>
-            		&nbsp;&nbsp;
-            		<!-- Кнопка удаления -->
-            		<button type="button" class="btn btn-secondary" onclick="clearFilter()">
-            			<i class="fas fa-eraser"></i>
-            		</button>
-            	</form>
-            </div>
 
 			<!-- Большой и средний дисплей -->
             <div class="full-details">
+            
+            	<div class="leftstr">
+	            	<form th:action="@{/users/page/1}" class="form-inline mr-3 mb-2">
+	            		<!--sortField и sortDir будут отпрвляться вместе с формой  -->
+	            		<input type="hidden" name="sortField" th:value="${sortField}"/>
+	   					<input type="hidden" name="sortDir" th:value="${sortDir}"/>        	
+	            	
+	            		<!-- Строка поиска -->
+	            		<input type="search" placeholder="Search" name="keyword" th:value="${keyword}" class="form-control" required/>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка поиска -->
+	            		<button type="submit" class="btn btn-primary">
+	            			<i class="fas fa-search"></i>
+	            		</button>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка удаления -->
+	            		<button type="button" class="btn btn-secondary" onclick="clearFilter()">
+	            			<i class="fas fa-eraser"></i>
+	            		</button>
+	            	</form>
+            	</div>
+            
+            	<div class="rightstr">
+	                <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-dark hover-link-green mr-2"></a>
+	                
+	                <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+	                
+	                <a th:href="@{/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark hover-link-green mr-2"></a>
+	                
+	                <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark hover-link-lightred mr-2"></a>
+            	</div>
+            
                 <!--table-responsive - по ширине контента; xL - по ширине страницы  -->
                 <table class="table table-responsive-xL table-bordered table-striped table-hover">
                     <thead class="thead-dark">
@@ -159,6 +162,38 @@
             
             <!-- Маленький дисплей -->
             <div class="less-details">
+            
+            	<div class="m-2">
+	                <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-dark hover-link-green mr-2"></a>
+	                
+	                <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+	                
+	                <a th:href="@{/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark hover-link-green mr-2"></a>
+	                
+	                <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark hover-link-lightred"></a>
+            	</div>
+            	
+            	<div>
+	            	<form th:action="@{/users/page/1}" class="form-inline m-2">
+	            		<!--sortField и sortDir будут отпрвляться вместе с формой  -->
+	            		<input type="hidden" name="sortField" th:value="${sortField}"/>
+	   					<input type="hidden" name="sortDir" th:value="${sortDir}"/>        	
+	            	
+	            		<!-- Строка поиска -->
+	            		<input type="search" placeholder="Search" name="keyword" th:value="${keyword}" class="form-control leftstr" required/>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка поиска -->
+	            		<button type="submit" class="btn btn-primary">
+	            			<i class="fas fa-search"></i>
+	            		</button>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка удаления -->
+	            		<button type="button" class="btn btn-secondary" onclick="clearFilter()">
+	            			<i class="fas fa-eraser"></i>
+	            		</button>
+	            	</form>
+            	</div>
+            	
             	<div th:each="user : ${listUsers}" class="row m-1">
             		<div class="col-4">
             			<span th:if="${user.photos == null}" class="fa-solid fa-image-portrait fa-7x icon-silver"></span>

@@ -3,6 +3,22 @@
 .icon-green {color: green}
 .icon-dark {color: gray}
 
+
+a.hover-link-green:hover {color: green; text-decoration: none;}
+a.hover-link-darkgreen:hover {color: #126205; text-decoration: none;}
+a.hover-link-darkgray:hover {color: #464746; text-decoration: none;}    
+a.hover-link-lightred:hover {color: #FD4C29; text-decoration: none;} 
+
+
+.leftstr, .rightstr {
+    float: left; /* Обтекание справа */ 
+    width: 50%; /* Ширина текстового блока */ 
+   }
+   .rightstr {
+    text-align: right; /* Выравнивание по правому краю */ 
+}
+
+
 @media screen and (max-width: 768px) {
 	/* small screen */
 	div.full-details {display : none}
