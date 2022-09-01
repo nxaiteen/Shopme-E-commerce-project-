@@ -30,6 +30,11 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	//Функция для получения пользователя по e-mail
+	public User getByEmail(String email) {
+		return userRepo.getUserByEmail(email);
+	}
+	
 	//Функция, возвращающая список всех пользователей 
 	public List<User> listAll() {
 		return (List<User>) userRepo.findAll(Sort.by("id").ascending());
@@ -73,6 +78,24 @@ public class UserService {
 		}
 		
 		return userRepo.save(user);
+	}
+	
+	public User updateAccount(User userInForm) {
+		User userInDB = userRepo.findById(userInForm.getId()).get();
+		
+		if (!userInDB.getPassword().isEmpty()) {
+			userInDB.setPassword(userInForm.getPassword());
+			encodePassword(userInDB);
+		}
+		
+		if (userInForm.getPhotos() != null) {
+			userInDB.setPhotos(userInForm.getPhotos());
+		}
+		
+		userInDB.setFirstname(userInForm.getFirstname());
+		userInDB.setLastname(userInForm.getLastname());
+		
+		return userRepo.save(userInDB);
 	}
 	
 	//Функция для кодирования пароля пользователя
