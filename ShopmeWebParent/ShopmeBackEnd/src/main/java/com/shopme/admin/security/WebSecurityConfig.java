@@ -44,6 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { //Разрешение на вход без логина и пароля
 		http.authorizeRequests()
+			.antMatchers("/users/**").hasAuthority("Admin")
+			.antMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
+			.antMatchers("/brands/**").hasAnyAuthority("Admin", "Editor")
+			.antMatchers("/products/**").hasAnyAuthority("Admin", "Salesperson", "Editor", "Shipper")
+			.antMatchers("/customers/**").hasAnyAuthority("Admin", "Salesperson")
+			.antMatchers("/shipping/**").hasAnyAuthority("Admin", "Salesperson")
+			.antMatchers("/orders/**").hasAnyAuthority("Admin", "Salesperson", "Shipper")
+			.antMatchers("/reports/**").hasAnyAuthority("Admin", "Salesperson")
+			.antMatchers("/articles/**").hasAnyAuthority("Admin", "Editor")
+			.antMatchers("/menus/**").hasAnyAuthority("Admin", "Editor")
+			.antMatchers("/settings/**").hasAuthority("Admin")
 			.anyRequest().authenticated()  //.permitAll() - вход без пароля
 			.and()
 			.formLogin()
