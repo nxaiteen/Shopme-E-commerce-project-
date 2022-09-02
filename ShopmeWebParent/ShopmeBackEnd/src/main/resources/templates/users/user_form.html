@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"> <!-- подключаем тимлиф -->
-    
+<html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments :: page_head(${pageTitle})" />
 
 	<body>
@@ -124,7 +123,7 @@
         <!-- Java Script -->
         <script type="text/javascript">   
             
-            moduleURL = "[[@{/}]]";
+            moduleURL = "[[@{/users}]]";
             
             //Проверка E-mail на уникальность (связь с методом checkDuplicateEmail в UserRestControoler)
             function checkEmailUnique(form) {
