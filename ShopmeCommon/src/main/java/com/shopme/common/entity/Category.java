@@ -41,6 +41,24 @@ public class Category {
 	public Integer getId() {
 		return id;
 	}
+	
+	public Category() {
+	}
+	
+	public Category(Integer id) {
+		this.id = id;
+	}
+
+	public Category(String name) {
+		this.name = name;
+		this.alias = name;
+		this.image = "default.png";
+	}
+	
+	public Category(String name, Category parent) {
+		this(name);
+		this.parent = parent;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
