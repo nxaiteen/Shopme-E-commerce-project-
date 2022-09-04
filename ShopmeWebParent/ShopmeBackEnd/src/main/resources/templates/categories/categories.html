@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:replace="fragments :: page_head('Categories - Shopme Admin')" />
+
+	<body>
+		<!-- Header -->
+        <div class="container-fluid">
+            
+            <div th:replace="navigation :: menu" />
+
+            <div>
+                <h2>Manage Categories</h2>
+            </div>
+            
+            <div th:if="${message != null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+
+			<!-- Большой и средний дисплей -->
+            <div class="full-details">
+            
+            	<div class="leftstr">
+	            	<form th:action="@{/categories}" class="form-inline mr-3 mb-2">
+    		            	
+	            		<!-- Строка поиска -->
+	            		<input type="search" placeholder="Search" name="keyword" th:value="${keyword}" class="form-control" required/>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка поиска -->
+	            		<button type="submit" class="btn btn-primary">
+	            			<i class="fas fa-search"></i>
+	            		</button>
+	            		&nbsp;&nbsp;
+	            		<!-- Кнопка удаления -->
+	            		<button type="button" class="btn btn-secondary" onclick="clearFilter()">
+	            			<i class="fas fa-eraser"></i>
+	            		</button>
+	            	</form>
+            	</div>
+            
+            	<div class="rightstr">
+	                <a th:href="@{/}" class="fas fa-folder-plus fa-2x icon-dark hover-link-green mr-2"></a>
+	                
+	                <a th:href="@{/}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+            	</div>
+            
+                <!--table-responsive - по ширине контента; xL - по ширине страницы  -->
+                <table class="table table-responsive-xL table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr class="text-white">
+                        	<th>ID</th>
+                        	
+                            <th>Category Image</th>
+                            
+                            <th>Category Name</th>
+                            
+                            <th>Alias</th>
+                            
+                            <th>Enabled</th>  
+
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="category : ${listCategories}">
+                            <td class="hideable-column">[[${category.id}]]</td>
+                            <td></td>
+                            <!-- геттеры без слова get и с маленькой буквы -->
+                            <td class="hideable-column">[[${category.name}]]</td>
+                            <td>[[${category.alias}]]</td>
+
+                            <td>
+	                        	<a th:if="${category.enabled == true}" class="fa-solid fa-circle-check fa-2x icon-green hover-link-darkgreen" 
+							    	th:href="@{'/categories/' + ${category.id} + '/enabled/false?' + '&keyword=' + ${keyword}}" 
+							    	title="Disable this category"
+							    	></a>
+	                                                        	
+						        <a th:if="${category.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark hover-link-darkgray" 
+						        	th:href="@{'/categories/' + ${category.id} + '/enabled/true?' + '&keyword=' + ${keyword}}"
+						        	title="Enable this category"
+						        	></a>
+                            </td>
+                            <td>
+						        <a class="fa-solid fa-pen-to-square fa-2x icon-green hover-link-darkgreen" th:href="@{/}"
+        							title="Edit this category"></a> 
+                                &nbsp; 
+                                <a class="fa-solid fa-trash fa-2x icon-dark link-delete hover-link-darkgray" 
+						           th:href="@{'/categories/delete/' + ${category.id}}"
+						           th:categoryId="${category.id}"
+						           title="Delete this category"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>         
+            </div>
+            
+            <!-- Всплывающее окно предупреждения -->
+            <div class="modal fade text-center" id="confirmModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Заголовок -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        
+                        <!-- Тело -->
+                        <div class="modal-body">
+                            <span id="confirmText"></span>
+                        </div>
+
+                        <!-- Футтер -->
+                        <div class="modal-footer">
+                        	<a class="btn btn-success" href="" id="yesButton">Yes</a>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="fragments :: footer"/>
+        </div>
+
+        <script type="text/javascript">
+           $(document).ready(function() {
+               $(".link-delete").on("click", function(e) {
+                   e.preventDefault();
+                   link = $(this);
+                   categoryId = link.attr("categoryId");
+                   
+                   $("#yesButton").attr("href", link.attr("href"));
+                   $("#confirmText").text("Are you sure you want to delete this category ID " + categoryId +"?");
+                   $("#confirmModal").modal();
+               }); 
+            });
+            
+            
+            //Кнопка "стереть"
+            function clearFilter() {
+				window.location = "[[@{/categories}]]";
+			}
+        </script>
+
+	</body>
+</html>
