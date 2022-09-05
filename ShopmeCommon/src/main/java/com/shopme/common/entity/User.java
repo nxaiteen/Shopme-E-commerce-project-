@@ -41,8 +41,8 @@ public class User {
 	
 	private boolean enabled;
 	
-	// Связанная таблица users_roles
-	@ManyToMany(fetch = FetchType.EAGER)
+	// Множеству пользователей может соответствовать множество ролей и множеству ролей соответствует  множество пользователей
+	@ManyToMany(fetch = FetchType.EAGER) //FetchType.EAGER - роли будут загружаться вместе с пользователем
 	@JoinTable(
 			name = "users_roles",
 			joinColumns = @JoinColumn(name = "users_id"),

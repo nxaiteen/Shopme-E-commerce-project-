@@ -31,10 +31,12 @@ public class Category {
 	
 	private boolean enabled;
 	
+	//У одной категории может быть только один parent_id
 	@OneToOne
 	@JoinColumn(name = "parent_id")
 	private Category parent;
 	
+	//У одной категории может быть несколько субкатегорий (children)
 	@OneToMany(mappedBy = "parent")
 	private Set<Category> children = new HashSet<>();
 

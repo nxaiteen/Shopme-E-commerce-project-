@@ -28,16 +28,22 @@ public class CategoryController {
 	private CategoryService service;
 	
 	@GetMapping("/categories") 
-	public String listFirstPage(Model model, @Param("keyword") String keyword) {
-	
-		Category category = new Category();
-		List<Category> listCategories = service.listAll(keyword);
-		
-		model.addAttribute("category", category);
+	public String listAll(Model model) {	
+		List<Category> listCategories = service.listAll();	
 		model.addAttribute("listCategories", listCategories);
-		model.addAttribute("keyword", keyword);
 		
 		return "categories/categories";
+	}
+	
+	@GetMapping("/categories/new") 
+	public String newCategory(Model model) {	
+		List<Category> listCategories = service.listCategoriesUsedInForm();	
+		
+		model.addAttribute("category", new Category());
+		model.addAttribute("listCategories", listCategories);
+		model.addAttribute("pageTitle", "Create New Category");
+		
+		return "categories/category_form";
 	}
 	
 	@GetMapping("/categories/delete/{id}")
@@ -58,7 +64,6 @@ public class CategoryController {
 	public String updateUserEnabledStatus( Model model,
 			@PathVariable("status") boolean enabled, 
 			@PathVariable("id") Integer id, 
-			@Param("keyword") String keyword,
 			RedirectAttributes redirectAttributes) {
 		
 		service.updateCategoryEnabledStatus(id, enabled);
@@ -66,17 +71,12 @@ public class CategoryController {
 		String message = "The category ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 
-		model.addAttribute("keyword", keyword);
-		
-		if(!keyword.equals("null"))
-			return "redirect:/categories" + "&keyword=" + keyword;
-		else
-			return "redirect:/categories";
+		return "redirect:/categories";
 	}
 	
 	@GetMapping("/categories/export/csv")
 	public void exportToCSV(HttpServletResponse response) throws IOException {
-		List<Category> listCategories = service.listAll(null);
+		List<Category> listCategories = service.listAll();
 		CategoryCsvExporter exporter = new CategoryCsvExporter();
 		exporter.export(listCategories, response);
 	}

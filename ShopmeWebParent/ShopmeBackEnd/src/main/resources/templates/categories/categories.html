@@ -39,7 +39,7 @@
             	</div>
             
             	<div class="rightstr">
-	                <a th:href="@{/}" class="fas fa-folder-plus fa-2x icon-dark hover-link-green mr-2"></a>
+	                <a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-dark hover-link-green mr-2"></a>
 	                
 	                <a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
             	</div>
@@ -72,12 +72,12 @@
 
                             <td>
 	                        	<a th:if="${category.enabled == true}" class="fa-solid fa-circle-check fa-2x icon-green hover-link-darkgreen" 
-							    	th:href="@{'/categories/' + ${category.id} + '/enabled/false?' + '&keyword=' + ${keyword}}" 
+							    	th:href="@{'/categories/' + ${category.id} + '/enabled/false'}" 
 							    	title="Disable this category"
 							    	></a>
 	                                                        	
 						        <a th:if="${category.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark hover-link-darkgray" 
-						        	th:href="@{'/categories/' + ${category.id} + '/enabled/true?' + '&keyword=' + ${keyword}}"
+						        	th:href="@{'/categories/' + ${category.id} + '/enabled/true'}"
 						        	title="Enable this category"
 						        	></a>
                             </td>

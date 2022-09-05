@@ -13,8 +13,8 @@ import com.shopme.common.entity.User;
 
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
 	
-	@Query("SELECT u FROM Category u WHERE CONCAT(u.id, ' ', u.name, ' ', u.alias) LIKE %?1%")
-	public List<Category> findAll(String keyword);
+//	@Query("SELECT u FROM Category u WHERE CONCAT(u.id, ' ', u.name, ' ', u.alias) LIKE %?1%")
+//	public List<Category> findAll(String keyword);
 	
 	@Query("UPDATE Category u SET u.enabled = ?2 WHERE u.id = ?1")
 	@Modifying
