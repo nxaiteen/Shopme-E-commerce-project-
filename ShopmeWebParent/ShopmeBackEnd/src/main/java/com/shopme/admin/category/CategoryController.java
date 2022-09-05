@@ -74,5 +74,10 @@ public class CategoryController {
 			return "redirect:/categories";
 	}
 	
-
+	@GetMapping("/categories/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = service.listAll(null);
+		CategoryCsvExporter exporter = new CategoryCsvExporter();
+		exporter.export(listCategories, response);
+	}
 }
