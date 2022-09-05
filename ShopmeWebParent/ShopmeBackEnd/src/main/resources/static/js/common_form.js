@@ -9,8 +9,8 @@ $(document).ready(function(){
     $("#fileImage").change(function(){
 		fileSize = this.files[0].size;	
 		//Проверка: файл должен быть менее  мегабайта
-		if (fileSize > 1048576){
-			this.setCustomValidity("You must choose n image less thn 1MB!");
+		if (fileSize > 102400){
+			this.setCustomValidity("You must choose an image less than 100KB!");
 			this.reportValidity();
 		} else {
 			this.setCustomValidity("");
