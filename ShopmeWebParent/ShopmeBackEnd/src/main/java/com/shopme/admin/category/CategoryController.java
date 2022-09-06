@@ -57,6 +57,7 @@ public class CategoryController {
 	public String saveCategory(Category category,
 			@RequestParam("fileImage") MultipartFile multipartFile,
 			RedirectAttributes redirectAttributes) throws IOException {
+		
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		category.setImage(fileName);
 		

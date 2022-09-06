@@ -16,7 +16,10 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 //	@Query("SELECT u FROM Category u WHERE CONCAT(u.id, ' ', u.name, ' ', u.alias) LIKE %?1%")
 //	public List<Category> findAll(String keyword);
 	
-	@Query("UPDATE Category u SET u.enabled = ?2 WHERE u.id = ?1")
+	@Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
+	public List<Category> findRootCategories();
+	
+	@Query("UPDATE Category c SET c.enabled = ?2 WHERE c.id = ?1")
 	@Modifying
 	public void updateEnabledStatus(Integer id, boolean enabled);
 
