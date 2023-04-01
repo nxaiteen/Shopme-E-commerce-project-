@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.shopme.admin.user.UserRepository;
 import com.shopme.common.entity.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ShopmeUserDetailsService implements UserDetailsService {
 
 	@Autowired

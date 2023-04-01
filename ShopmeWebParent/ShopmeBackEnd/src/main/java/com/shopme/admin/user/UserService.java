@@ -92,8 +92,8 @@ public class UserService {
 			userInDB.setPhotos(userInForm.getPhotos());
 		}
 		
-		userInDB.setFirstname(userInForm.getFirstname());
-		userInDB.setLastname(userInForm.getLastname());
+		userInDB.setFirstName(userInForm.getFirstName());
+		userInDB.setLastName(userInForm.getLastName());
 		
 		return userRepo.save(userInDB);
 	}

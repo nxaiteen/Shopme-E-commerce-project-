@@ -57,8 +57,8 @@ public class AccountController {
 			service.updateAccount(user);
 		}
 
-		loggedUser.setFirstName(user.getFirstname());
-		loggedUser.setLastName(user.getLastname());
+		loggedUser.setFirstName(user.getFirstName());
+		loggedUser.setLastName(user.getLastName());
 		
 		redirectAttributes.addFlashAttribute("message", "Your account details have been updated.");
 		

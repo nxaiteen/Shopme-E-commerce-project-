@@ -15,6 +15,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.shopme.admin.AbstractExporter;
 import com.shopme.common.entity.User;
 
 public class UserPdfExporter extends AbstractExporter {
@@ -53,8 +54,8 @@ public class UserPdfExporter extends AbstractExporter {
 		for (User user : listUsers) {
 			table.addCell(String.valueOf(user.getId()));
 			table.addCell(user.getEmail());
-			table.addCell(user.getFirstname());
-			table.addCell(user.getLastname());
+			table.addCell(user.getFirstName());
+			table.addCell(user.getLastName());
 			table.addCell(user.getRoles().toString());
 			table.addCell(String.valueOf(user.isEnabled()));
 		}
