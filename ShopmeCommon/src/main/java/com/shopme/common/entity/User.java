@@ -45,7 +45,7 @@ public class User {
 	@ManyToMany(fetch = FetchType.EAGER) //FetchType.EAGER - роли будут загружаться вместе с пользователем
 	@JoinTable(
 			name = "users_roles",
-			joinColumns = @JoinColumn(name = "users_id"),
+			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private Set<Role> roles = new HashSet<>();
