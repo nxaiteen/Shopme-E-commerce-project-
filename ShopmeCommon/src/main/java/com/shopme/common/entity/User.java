@@ -31,10 +31,10 @@ public class User {
 	private String password;
 	
 	@Column(name = "first_name", length = 45, nullable = false)
-	private String firstname;
+	private String firstName;
 	
 	@Column(name = "last_name", length = 45, nullable = false)
-	private String lastname;
+	private String lastName;
 	
 	@Column(length = 64)
 	private String photos;
@@ -54,11 +54,11 @@ public class User {
 	public User() {
 	}
 	
-	public User(String email, String password, String firstname, String lastname) {
+	public User(String email, String password, String firstName, String lastName) {
 		this.email = email;
 		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public Integer getId() {
@@ -86,19 +86,19 @@ public class User {
 	}
 
 	public String getFirstName() {
-		return firstname;
+		return firstName;
 	}
 
 	public void setFirstName(String firstname) {
-		this.firstname = firstname;
+		this.firstName = firstname;
 	}
 
 	public String getLastName() {
-		return lastname;
+		return lastName;
 	}
 
 	public void setLastName(String lastname) {
-		this.lastname = lastname;
+		this.lastName = lastname;
 	}
 
 	public String getPhotos() {
@@ -132,8 +132,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", roles=" + roles + "]";
+		return "User [id=" + id + ", email=" + email + ", firstname=" + firstName
+				+ ", lastname=" + lastName + ", roles=" + roles + "]";
 	}
 	
 	//Означает, что геттер не является каким-либо полем в базе данных
@@ -147,6 +147,6 @@ public class User {
 	
 	@Transient
 	public String getFullName( ) {
-		return firstname + " " + lastname;
+		return firstName + " " + lastName;
 	}
 }

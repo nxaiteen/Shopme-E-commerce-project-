@@ -10,7 +10,7 @@ a.hover-link-darkgray:hover {color: #464746; text-decoration: none;}
 a.hover-link-lightred:hover {color: #FD4C29; text-decoration: none;} 
 
 
-.leftstr, .rightstr {
+.leftstr, .rightstr{
     float: left; /* Обтекание справа */ 
     width: 50%; /* Ширина текстового блока */ 
    }

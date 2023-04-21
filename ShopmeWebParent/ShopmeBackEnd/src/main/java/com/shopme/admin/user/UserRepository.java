@@ -18,7 +18,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 	//Используется для проверки существования пользователя по ID (исп. для удаления пользователя по ID)
 	public Long countById(Integer id);
 	
-	@Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstname, ' ', u.lastname) LIKE %?1%")
+	@Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ', u.lastName) LIKE %?1%")
 	public Page<User> findAll(String keyword, Pageable pageable);
 	
 	//Используется для обновления статуса enabled/disabled
