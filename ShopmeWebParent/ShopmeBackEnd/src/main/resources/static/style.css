@@ -3,19 +3,19 @@
 .icon-green {color: green}
 .icon-dark {color: gray}
 
-
 a.hover-link-green:hover {color: green; text-decoration: none;}
 a.hover-link-darkgreen:hover {color: #126205; text-decoration: none;}
 a.hover-link-darkgray:hover {color: #464746; text-decoration: none;}    
-a.hover-link-lightred:hover {color: #FD4C29; text-decoration: none;} 
-
+a.hover-link-lightred:hover {color: #FD4C29; text-decoration: none;}
+a.hover-link-blue:hover {color: #0a6fff; text-decoration: none;}
 
 .leftstr, .rightstr{
-    float: left; /* Обтекание справа */ 
-    width: 50%; /* Ширина текстового блока */ 
+    float: left;
+    width: 60%;
    }
    .rightstr {
-    text-align: right; /* Выравнивание по правому краю */ 
+    text-align: right;
+	width: 40%;
 }
 
 

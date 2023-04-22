@@ -21,7 +21,7 @@
 
 <th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
 	<a class="text-white"
-	   th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=' + ${fieldName}  +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
+	   th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=' + ${fieldName}  +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">
 		[[${columnLabel}]]
 	</a>
 	<span th:if="${sortField == fieldName}"
@@ -30,7 +30,9 @@
 
 <a th:fragment="page_link(moduleURL, pageNum, label)"
    class="page-link"
-   th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
+   th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">[[${label}]]
+</a>
+
 
 <div th:fragment="user_photos" th:remove="tag">
 	<span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
@@ -39,25 +41,25 @@
 </div>
 
 <div th:fragment="status(enabled, entityName, entityURL)" th:remove="tag">
-	<a th:if="${enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+	<a th:if="${enabled == true}" class="fas fa-check-circle fa-2x icon-green hover-link-darkgreen"
 	   th:href="@{${entityURL} + '/enabled/false'}"
 	   th:title="'Disable this ' + ${entityName}"
 	></a>
 
-	<a th:if="${enabled == false}" class="fas fa-circle fa-2x icon-dark"
+	<a th:if="${enabled == false}" class="fas fa-circle fa-2x icon-dark hover-link-darkgray"
 	   th:href="@{${entityURL} + '/enabled/true'}"
 	   th:title="'Enable this ' + ${entityName}"
 	></a>
 </div>
 
 <div th:fragment="edit(entityName, editURL)" th:remove="tag">
-	<a class="fas fa-edit fa-2x icon-green" th:href="@{${editURL}}"
+	<a class="fas fa-edit fa-2x icon-green hover-link-darkgreen" th:href="@{${editURL}}"
 	   th:title="'Edit this ' + ${entityName}"></a>
 </div>
 
 <div th:fragment="delete(entityName, entityId, deleteURL, visible)" th:remove="tag">
 	<th:block th:if="${visible}">
-		<a class="fas fa-trash fa-2x icon-dark link-delete"
+		<a class="fas fa-trash fa-2x icon-dark link-delete hover-link-lightred"
 		   th:href="@{${deleteURL}}"
 		   th:entityId="${entityId}"
 		   th:title="'Delete this ' + ${entityName}"></a>
@@ -65,10 +67,10 @@
 </div>
 
 <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
-	<div class="text-center m-1" th:if="${totalItems > 0}">
+	<div class="text-center m-3" th:if="${totalItems > 0}">
 		<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 	</div>
-	<div class="text-center m-1" th:unless="${totalItems > 0}">
+	<div class="text-center m-3" th:unless="${totalItems > 0}">
 		<span>No [[${entityName}]] found</span>
 	</div>
 
@@ -105,7 +107,7 @@
 		<input type="hidden" name="sortDir" th:value="${sortDir}" />
 
 		Search:&nbsp;
-		<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+		<input type="search" name="keyword" th:value="${keyword}" class="form-control border-dark" required/>
 		&nbsp;&nbsp;
 		<button type="submit" class="btn btn-primary">
 			<i class="fas fa-search"></i>

@@ -4,11 +4,11 @@
 <body>
 <div class="container-fluid">
 	<div th:replace="navigation :: menu"></div>
-	<h2>Manage Brands</h2>
+	<h2 class="mt-3 text-center">Manage Brands</h2>
 	<div th:replace="fragments :: search_form_and_message('/brands/page/1')" />
-	<div class="rightstr">
-		<a th:href="@{/brands/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
-		<a th:href="@{/brands/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+	<div class="rightstr mt-4">
+		<a th:href="@{/brands/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2 hover-link-darkgreen"></a>
+		<a th:href="@{/brands/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2 hover-link-blue"></a>
 	</div>
 	
 	<div class="full-details">
@@ -29,7 +29,7 @@
 						<img th:src="@{${brand.logoPath}}" style="width: 100px" class="img-fluid"/>
 					</td>
 					<td>[[${brand.name}]]</td>
-					<td>
+					<td style="width: 40%">
 						<th:block th:each="cat : ${brand.categories}">
 						<span class="badge badge-secondary" th:text="${cat.name}"></span>
 						</th:block>
