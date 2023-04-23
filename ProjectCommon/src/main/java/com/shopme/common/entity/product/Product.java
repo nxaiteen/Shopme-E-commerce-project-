@@ -2,6 +2,8 @@ package com.shopme.common.entity.product;
 
 import com.shopme.common.entity.Brand;
 import com.shopme.common.entity.Category;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +26,8 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "products")
+@Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +64,11 @@ public class Product {
     private float discountPercent;
 
     private float length;
+
     private float width;
+
     private float height;
+
     private float weight;
 
     @Column(name = "main_image", nullable = false)
@@ -81,150 +88,6 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetail> details = new ArrayList<>();
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getFullDescription() {
-        return fullDescription;
-    }
-
-    public void setFullDescription(String fullDescription) {
-        this.fullDescription = fullDescription;
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean isInStock() {
-        return inStock;
-    }
-
-    public void setInStock(boolean inStock) {
-        this.inStock = inStock;
-    }
-
-    public float getCost() {
-        return cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public float getDiscountPercent() {
-        return discountPercent;
-    }
-
-    public void setDiscountPercent(float discountPercent) {
-        this.discountPercent = discountPercent;
-    }
-
-    public float getLength() {
-        return length;
-    }
-
-    public void setLength(float length) {
-        this.length = length;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + "]";
@@ -233,19 +96,6 @@ public class Product {
     public String getMainImage() {
         return mainImage;
     }
-
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
-
-    public Set<ProductImage> getImages() {
-        return images;
-    }
-
-    public void setImages(Set<ProductImage> images) {
-        this.images = images;
-    }
-
     public void addExtraImage(String imageName) {
         this.images.add(new ProductImage(imageName, this));
     }
@@ -285,12 +135,19 @@ public class Product {
 
         return false;
     }
-
     @Transient
     public String getShortName() {
         if (name.length() > 70) {
             return name.substring(0, 70).concat("...");
         }
         return name;
+    }
+
+    @Transient
+    public float getDiscountPrice() {
+        if (discountPercent > 0) {
+            return price * ((100 - discountPercent) / 100);
+        }
+        return this.price;
     }
 }

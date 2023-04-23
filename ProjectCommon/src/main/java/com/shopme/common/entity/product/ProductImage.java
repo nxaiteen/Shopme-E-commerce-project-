@@ -1,5 +1,8 @@
 package com.shopme.common.entity.product;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +15,8 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "product_images")
+@Getter
+@Setter
 public class ProductImage {
 
 	@Id
@@ -34,33 +39,8 @@ public class ProductImage {
 		this.product = product;
 	}
 
-
 	public ProductImage(String name, Product product) {
 		this.name = name;
-		this.product = product;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
 		this.product = product;
 	}
 

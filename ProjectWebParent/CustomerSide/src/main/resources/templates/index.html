@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head('Shopme', 'none')"></head>
+<head th:replace="fragments :: page_head('Shopme', 'none')" />
 <body>
-    <div class="container-fluid">
-        <div th:replace="navigation :: header_menu"></div>
-        <div>
-            <h1>Welcome to Shopme</h1>
-        </div>
-        <div th:replace="navigation :: footer_menu"></div>
-    </div>
+<div class="container-fluid">
+	<div th:replace="navigation :: header_menu"></div>
+	<div>
+		<h1 class="text-center mt-4 mb-5">Shopping by Categories</h1>
+	</div>
+
+
+	<div class="row mb-5">
+		<div class="col-2 m-2 text-center" th:each="cat : ${listCategories}">
+			<div><img th:src="@{${cat.imagePath}}" width="80" /></div>
+			<div>
+				<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.name}]]</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:replace="navigation :: footer_menu"></div>
+</div>
 </body>
 </html>
