@@ -20,52 +20,58 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public UserDetailsService userDetailsService() {
 		return new ShopmeUserDetailsService();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(userDetailsService());
 		authProvider.setPasswordEncoder(passwordEncoder());
-		
+
 		return authProvider;
 	}
-	
-	
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception { //Разрешение на вход без логина и пароля
+	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/users/**").hasAuthority("Admin")
-			.antMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
-			.antMatchers("/brands/**").hasAnyAuthority("Admin", "Editor")
-			.antMatchers("/products/**").hasAnyAuthority("Admin", "Salesperson", "Editor", "Shipper")
-			.antMatchers("/customers/**").hasAnyAuthority("Admin", "Salesperson")
-			.antMatchers("/shipping/**").hasAnyAuthority("Admin", "Salesperson")
-			.antMatchers("/orders/**").hasAnyAuthority("Admin", "Salesperson", "Shipper")
-			.antMatchers("/reports/**").hasAnyAuthority("Admin", "Salesperson")
-			.antMatchers("/articles/**").hasAnyAuthority("Admin", "Editor")
-			.antMatchers("/menus/**").hasAnyAuthority("Admin", "Editor")
-			.antMatchers("/settings/**").hasAuthority("Admin")
-			.anyRequest().authenticated()  //.permitAll() - вход без пароля
-			.and()
-			.formLogin()
+				.antMatchers("/users/**").hasAuthority("Admin")
+				.antMatchers("/categories/**", "/brands/**").hasAnyAuthority("Admin", "Editor")
+				.antMatchers("/products/new", "/products/delete/**").hasAnyAuthority("Admin", "Editor")
+
+				.antMatchers("/products/edit/**", "/products/save", "/products/check_unique")
+				.hasAnyAuthority("Admin", "Editor", "Salesperson")
+
+				.antMatchers("/products", "/products/", "/products/detail/**", "/products/page/**")
+				.hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
+
+				.antMatchers("/products/**").hasAnyAuthority("Admin", "Editor")
+				.antMatchers("/customers/**").hasAnyAuthority("Admin", "Salesperson")
+				.antMatchers("/shipping/**").hasAnyAuthority("Admin", "Salesperson")
+				.antMatchers("/orders/**").hasAnyAuthority("Admin", "Salesperson", "Shipper")
+				.antMatchers("/reports/**").hasAnyAuthority("Admin", "Salesperson")
+				.antMatchers("/articles/**").hasAnyAuthority("Admin", "Editor")
+				.antMatchers("/menus/**").hasAnyAuthority("Admin", "Editor")
+				.antMatchers("/settings/**").hasAuthority("Admin")
+
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
 				.loginPage("/login")
 				.usernameParameter("email")
 				.permitAll()
-			.and().logout().permitAll()
-			.and()
+				.and().logout().permitAll()
+				.and()
 				.rememberMe()
-				.key("abcdefghijklmnopqrs_1234567890")
-				.tokenValiditySeconds(7 * 24 * 60 * 60);	
+				.key("AbcDefgHijKlmnOpqrs_1234567890")
+				.tokenValiditySeconds(7 * 24 * 60 * 60);
 	}
 
 	@Override
@@ -73,5 +79,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
 	}
 
-	
+
 }
