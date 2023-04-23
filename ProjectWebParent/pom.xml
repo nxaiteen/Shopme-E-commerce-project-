@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.shopme</groupId>
-	<artifactId>ShopmeWebParent</artifactId>
+	<artifactId>ProjectWebParent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ShopmeWebParent</name>
@@ -19,8 +19,8 @@
 	</properties>
 	
 	<modules>
-		<module>ShopmeBackEnd</module>
-		<module>ShopmeFrontEnd</module>
+		<module>AdminSide</module>
+		<module>CustomerSide</module>
 	</modules>
 	
 	<dependencies>
@@ -74,7 +74,7 @@
 		
 		<dependency>
 			<groupId>com.shopme</groupId>
-			<artifactId>ShopmeCommon</artifactId>
+			<artifactId>ProjectCommon</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

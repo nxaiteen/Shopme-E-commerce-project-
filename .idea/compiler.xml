@@ -6,17 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ShopmeCommon" />
-        <module name="ShopmeBackEnd" />
-        <module name="ShopmeFrontEnd" />
+        <module name="CustomerSide" />
+        <module name="AdminSide" />
+        <module name="ProjectCommon" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ShopmeBackEnd" options="-parameters" />
-      <module name="ShopmeCommon" options="-parameters" />
-      <module name="ShopmeFrontEnd" options="-parameters" />
+      <module name="AdminSide" options="-parameters" />
+      <module name="CustomerSide" options="-parameters" />
+      <module name="ProjectCommon" options="-parameters" />
     </option>
   </component>
 </project>
