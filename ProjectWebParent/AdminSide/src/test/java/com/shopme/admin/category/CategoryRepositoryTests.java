@@ -24,23 +24,6 @@ public class CategoryRepositoryTests {
 	private CategoryRepository repo;
 	
 	@Test
-	public void testCreateRootCategory() {
-		Category category = new Category("Electronics");
-		Category savedCategory = repo.save(category);
-		
-		assertThat(savedCategory.getId()).isGreaterThan(0);
-	}
-	
-	@Test
-	public void testCreateSubCategory() {
-		Category parent = new Category(7);
-		Category subCategory = new Category("iPhone", parent);
-		Category savedCategory = repo.save(subCategory);
-		
-		assertThat(savedCategory.getId()).isGreaterThan(0);
-	}
-	
-	@Test
 	public void testGetCategory() {
 		Category category = repo.findById(2).get();
 		System.out.println(category.getName());

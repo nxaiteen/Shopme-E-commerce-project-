@@ -17,7 +17,6 @@ import com.shopme.common.entity.Role;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE) // Тестирование реальной базы данных
-@Rollback(false)
 public class RoleRepositoryTests {
 
 	@Autowired

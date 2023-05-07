@@ -8,6 +8,7 @@ a.hover-link-darkgreen:hover {color: #126205; text-decoration: none;}
 a.hover-link-darkgray:hover {color: #464746; text-decoration: none;}    
 a.hover-link-lightred:hover {color: #FD4C29; text-decoration: none;}
 a.hover-link-blue:hover {color: #0a6fff; text-decoration: none;}
+a.hover-link-grey:hover {color: #6d747e; text-decoration: none;}
 
 .leftstr, .rightstr{
     float: left;
